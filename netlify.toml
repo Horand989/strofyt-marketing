@@ -1,0 +1,22 @@
+# Netlify configuration for strofyt.com (Next.js static export)
+
+[build]
+  command = "npm run build"
+  publish = "out"
+
+# Canonical host is NON-www (the site already serves there).
+# Set strofyt.com as PRIMARY domain in Netlify -> Domain management;
+# Netlify then 301s www.strofyt.com and the netlify.app subdomain.
+# This rule is a fallback.
+[[redirects]]
+  from = "https://www.strofyt.com/*"
+  to = "https://strofyt.com/:splat"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
